@@ -2,6 +2,7 @@ package com.brx.mobileapp
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.brx.mobileapp.ui.main.MainFragment
 import kotlinx.android.synthetic.main.main_activity.*
@@ -18,6 +19,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         setupNavigationBar()
+        validateParameterDefinition()
+    }
+
+    private fun validateParameterDefinition() {
+        if (BuildConfig.KEY.isEmpty() || BuildConfig.CX.isEmpty()) {
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.invalid_parameters))
+                .setMessage(getString(R.string.please_configure_parameters))
+                .setPositiveButton(getString(R.string.ok), null)
+                .setOnDismissListener { finish() }
+                .create().show()
+        }
     }
 
     private fun setupNavigationBar() {
