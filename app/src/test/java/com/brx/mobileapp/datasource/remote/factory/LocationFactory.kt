@@ -1,8 +1,6 @@
 package com.brx.mobileapp.datasource.remote.factory
 
-import com.brx.mobileapp.datasource.model.Location
-import com.brx.mobileapp.datasource.model.Locations
-import com.brx.mobileapp.datasource.model.Operation
+import com.brx.mobileapp.datasource.model.*
 import com.brx.mobileapp.datasource.remote.factory.PrimitiveFactory.randomFLoat
 import com.brx.mobileapp.datasource.remote.factory.PrimitiveFactory.randomInt
 import com.brx.mobileapp.datasource.remote.factory.PrimitiveFactory.randomString
@@ -29,5 +27,11 @@ object LocationFactory {
     fun makeOperations(number: Int = 3) = mutableListOf<Operation>().apply {
         for (i in 1..number) this.add(makeOperation())
     }
+
+    fun makeSearchResults() = SearchResults(
+        listOf(
+            SearchItem(randomString(), Image(randomString()))
+        )
+    )
 
 }
