@@ -8,14 +8,11 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
 import io.reactivex.Observable
-import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.plugins.RxJavaPlugins
-import io.reactivex.schedulers.Schedulers
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-class LocationRepositoryTest {
+class LocationRepositoryTest : RepositoryTest() {
 
     private lateinit var api: LocationApi
     private lateinit var repository: LocationRepository
@@ -24,10 +21,6 @@ class LocationRepositoryTest {
     fun setUp() {
         api = mockk()
         repository = LocationRepository(api)
-
-        // specify which thread to use for IO and Main schedulers
-        RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
     }
 
     @After
