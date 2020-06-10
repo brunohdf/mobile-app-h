@@ -17,9 +17,9 @@ object LocationFactory {
         randomString()
     )
 
-    fun makeLocations(number: Int = 3) = Locations(
-        mutableListOf<Location>().apply {
-            for (i in 1..number) this.add(makeLocation())
-        }
-    )
+    fun makeLocations(number: Int = 3) = Locations(makeLocationList(number))
+
+    fun makeLocationList(number: Int = 3) = mutableListOf<Location>().apply {
+        for (i in 1..number) this.add(makeLocation())
+    }
 }

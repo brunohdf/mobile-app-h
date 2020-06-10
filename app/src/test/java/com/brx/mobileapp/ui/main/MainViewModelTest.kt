@@ -1,0 +1,65 @@
+package com.brx.mobileapp.ui.main
+
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.brx.mobileapp.factory.LocationFactory.makeLocationList
+import com.brx.mobileapp.usecase.GetLocations
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.unmockkAll
+import io.reactivex.Single
+import org.junit.*
+
+class MainViewModelTest {
+
+    private val useCase: GetLocations = mockk()
+    private lateinit var viewModel: MainViewModel
+
+    @get:Rule
+    val rule = InstantTaskExecutorRule()
+
+    @Before
+    fun setUp() {
+        viewModel = MainViewModel(useCase)
+    }
+
+    @After
+    fun tearDown() {
+        unmockkAll()
+    }
+
+    @Test
+    fun fetchLocations_shouldTriggerLoading() {
+        every { useCase.execute(any()) } returns Single.just(makeLocationList())
+
+        viewModel.fetchLocations()
+
+        Assert.assertTrue(viewModel.showLoading().value ?: false)
+    }
+
+    @Test
+    fun fetchLocations_withData_shouldTriggerLocations() {
+        every { useCase.execute(any()) } returns Single.just(makeLocationList())
+
+        viewModel.fetchLocations()
+
+        Assert.assertTrue(viewModel.showLocations().value?.isNotEmpty() ?: false)
+    }
+
+    @Test
+    fun fetchLocations_whenEmpty_shouldTriggerLocations() {
+        every { useCase.execute(any()) } returns Single.just(mutableListOf())
+
+        viewModel.fetchLocations()
+
+        Assert.assertTrue(viewModel.showLocations().value?.isEmpty() ?: false)
+    }
+
+    @Test
+    fun fetchLocations_withException_shouldTriggerError() {
+        every { useCase.execute(any()) } returns Single.error(Throwable())
+
+        viewModel.fetchLocations()
+
+        Assert.assertTrue(viewModel.showError().value is Throwable)
+    }
+}
