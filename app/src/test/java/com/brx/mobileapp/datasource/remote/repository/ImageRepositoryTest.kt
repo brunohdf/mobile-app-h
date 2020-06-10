@@ -1,8 +1,8 @@
 package com.brx.mobileapp.datasource.remote.repository
 
 import com.brx.mobileapp.datasource.remote.CustomSearchEngineApi
-import com.brx.mobileapp.datasource.remote.factory.LocationFactory.makeSearchResults
-import com.brx.mobileapp.datasource.remote.factory.PrimitiveFactory.randomString
+import com.brx.mobileapp.factory.PrimitiveFactory.randomString
+import com.brx.mobileapp.factory.SearchResultFactory.makeSearchResults
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll

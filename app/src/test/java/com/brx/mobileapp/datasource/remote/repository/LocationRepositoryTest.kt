@@ -1,9 +1,9 @@
 package com.brx.mobileapp.datasource.remote.repository
 
 import com.brx.mobileapp.datasource.remote.LocationApi
-import com.brx.mobileapp.datasource.remote.factory.LocationFactory.makeLocation
-import com.brx.mobileapp.datasource.remote.factory.LocationFactory.makeLocations
-import com.brx.mobileapp.datasource.remote.factory.PrimitiveFactory.randomInt
+import com.brx.mobileapp.factory.LocationFactory.makeLocation
+import com.brx.mobileapp.factory.LocationFactory.makeLocations
+import com.brx.mobileapp.factory.PrimitiveFactory.randomInt
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll

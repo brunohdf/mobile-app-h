@@ -1,4 +1,4 @@
-package com.brx.mobileapp.datasource.remote.factory
+package com.brx.mobileapp.factory
 
 import java.util.*
 
