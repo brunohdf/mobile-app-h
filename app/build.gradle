@@ -44,6 +44,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.7.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
     implementation 'com.google.android.material:material:1.1.0'
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-fragment:$koin_version"
     testImplementation 'junit:junit:4.12'
     testImplementation 'io.mockk:mockk:1.9.3'
     testImplementation "android.arch.core:core-testing:1.1.1"
