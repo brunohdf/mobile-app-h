@@ -11,7 +11,11 @@ data class Location(
     val type: String,
     val about: String? = null,
     val phone: String? = null,
-    val schedule: List<Map<String, Operation>>? = null
+    val schedule: List<Map<String, Operation>>? = null,
+    @Transient
+    var imageUrl: String? = null,
+    @Transient
+    var imageUrlThumb: String? = null
 )
 
 data class Operation(
