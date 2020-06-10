@@ -1,7 +1,7 @@
 package com.brx.mobileapp.usecase
 
-import com.brx.mobileapp.datasource.remote.CustomSearchEngineApi
-import com.brx.mobileapp.datasource.remote.LocationApi
+import com.brx.mobileapp.datasource.remote.repository.ImageRepository
+import com.brx.mobileapp.datasource.remote.repository.LocationRepository
 import com.brx.mobileapp.datasource.remote.repository.RepositoryTest
 import com.brx.mobileapp.factory.LocationFactory
 import com.brx.mobileapp.factory.SearchResultFactory
@@ -17,13 +17,13 @@ import org.junit.Test
 
 class GetLocationsTest : RepositoryTest() {
 
-    private val locationsApi: LocationApi = mockk()
-    private val searchApi: CustomSearchEngineApi = mockk()
+    private val locationsRepository: LocationRepository = mockk()
+    private val searchRepository: ImageRepository = mockk()
     private lateinit var useCase: GetLocations
 
     @Before
     fun setUp() {
-        useCase = GetLocations(searchApi, locationsApi)
+        useCase = GetLocations(searchRepository, locationsRepository)
     }
 
     @After
@@ -33,29 +33,29 @@ class GetLocationsTest : RepositoryTest() {
 
     @Test
     fun getLocations_shouldFetchOneImage_forEachLocation() {
-        every { locationsApi.getLocations() } returns Observable.just(
+        every { locationsRepository.getLocations() } returns Observable.just(
             LocationFactory.makeLocations(
                 2
             )
         )
-        every { searchApi.fetchImage(any()) } returns Observable.just(SearchResultFactory.makeSearchResults())
+        every { searchRepository.fetchImage(any()) } returns Observable.just(SearchResultFactory.makeSearchResults())
 
         useCase.execute(Unit)
             .test()
             .assertComplete()
 
-        verify(exactly = 1) { locationsApi.getLocations() }
-        verify(exactly = 2) { searchApi.fetchImage(any()) }
+        verify(exactly = 1) { locationsRepository.getLocations() }
+        verify(exactly = 2) { searchRepository.fetchImage(any()) }
     }
 
     @Test
     fun getLocations_withFetchImageError_shouldComplete() {
-        every { locationsApi.getLocations() } returns Observable.just(
+        every { locationsRepository.getLocations() } returns Observable.just(
             LocationFactory.makeLocations(
                 1
             )
         )
-        every { searchApi.fetchImage(any()) } returns Observable.error(Throwable())
+        every { searchRepository.fetchImage(any()) } returns Observable.error(Throwable())
 
         useCase.execute(Unit)
             .test()
@@ -64,8 +64,8 @@ class GetLocationsTest : RepositoryTest() {
 
     @Test
     fun getLocationsError_shouldNotComplete() {
-        every { locationsApi.getLocations() } returns Observable.error(Throwable())
-        every { searchApi.fetchImage(any()) } returns Observable.just(SearchResultFactory.makeSearchResults())
+        every { locationsRepository.getLocations() } returns Observable.error(Throwable())
+        every { searchRepository.fetchImage(any()) } returns Observable.just(SearchResultFactory.makeSearchResults())
 
         useCase.execute(Unit)
             .test()
