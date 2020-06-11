@@ -13,9 +13,10 @@ interface CustomSearchEngineApi {
     }
 
     @Suppress("SpellCheckingInspection")
-    @GET("customsearch/v1?num=1&searchType=image")
+    @GET("customsearch/v1?num=1&searchType=image&imgSize=large")
     fun fetchImage(
         @Query("q") query: String,
+        @Query("start") index: Int,
         @Query("key") apiKey: String = BuildConfig.KEY,
         @Query("cx") language: String = BuildConfig.CX
     ): Observable<SearchResults>

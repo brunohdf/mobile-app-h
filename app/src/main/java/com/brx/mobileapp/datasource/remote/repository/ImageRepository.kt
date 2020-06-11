@@ -8,7 +8,15 @@ import io.reactivex.schedulers.Schedulers
 
 class ImageRepository(private val api: CustomSearchEngineApi) {
 
-    fun fetchImage(keywork: String): Observable<SearchResults> = api.fetchImage(keywork)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+    private val searchCounter = HashMap<String, Int>()
+
+    fun fetchImage(keyword: String): Observable<SearchResults> {
+
+        val searchIndex = (searchCounter[keyword] ?: 0) + 1
+        searchCounter[keyword] = searchIndex
+
+        return api.fetchImage(keyword, searchIndex)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }
