@@ -13,6 +13,7 @@
         android:alpha="0.4"
         android:background="@drawable/icon_background"
         android:padding="24dp"
+        android:rotation="-16"
         app:layout_constraintBottom_toTopOf="@+id/error_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
