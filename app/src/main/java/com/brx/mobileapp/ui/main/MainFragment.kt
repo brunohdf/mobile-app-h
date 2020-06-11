@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.brx.mobileapp.R
 import com.brx.mobileapp.datasource.model.Location
-import com.brx.mobileapp.util.MarginItemDecoration
 import com.brx.mobileapp.util.extension.visible
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.koin.android.ext.android.inject
@@ -65,11 +64,6 @@ class MainFragment : Fragment() {
 
         locations.adapter = adapter
         locations.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
-        locations.addItemDecoration(
-            MarginItemDecoration(
-                resources.getDimension(R.dimen.grid_spacing).toInt()
-            )
-        )
 
     }
 
