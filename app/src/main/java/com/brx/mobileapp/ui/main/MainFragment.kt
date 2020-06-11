@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
@@ -45,6 +44,8 @@ class MainFragment : Fragment() {
     private fun bindEvents() {
         viewModel.showLocations().observe(viewLifecycleOwner, Observer {
             progressBar.visible(false)
+            locations.visible()
+
             dataSet.addAll(it)
             adapter.notifyDataSetChanged()
         })
@@ -55,7 +56,13 @@ class MainFragment : Fragment() {
 
         viewModel.showError().observe(viewLifecycleOwner, Observer {
             progressBar.visible(false)
-            Toast.makeText(requireContext(), "Ops: ${it.message}", Toast.LENGTH_SHORT).show()
+            errorView.apply {
+                visible()
+                title = context.getString(R.string.error)
+                message = context.getString(R.string.unexpected_error)
+                image = R.drawable.ic_error
+
+            }
         })
     }
 
