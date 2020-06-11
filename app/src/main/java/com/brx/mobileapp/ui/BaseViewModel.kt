@@ -10,8 +10,8 @@ abstract class BaseViewModel : ViewModel() {
     protected var disposable: CompositeDisposable? = CompositeDisposable()
 
     private val showLoadingEvent = MutableLiveData<Boolean>()
-    protected fun setLoadingEvent() {
-        showLoadingEvent.value = true
+    protected fun setLoadingEvent(showLoading: Boolean = true) {
+        showLoadingEvent.value = showLoading
     }
 
     fun showLoading(): LiveData<Boolean> = showLoadingEvent

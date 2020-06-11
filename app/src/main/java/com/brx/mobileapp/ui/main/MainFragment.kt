@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.brx.mobileapp.R
 import com.brx.mobileapp.datasource.model.Location
 import com.brx.mobileapp.util.MarginItemDecoration
+import com.brx.mobileapp.util.extension.visible
 import kotlinx.android.synthetic.main.main_fragment.*
+import org.koin.android.ext.android.inject
 
 class MainFragment : Fragment() {
 
@@ -19,13 +22,9 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
-    private val dataSet = mutableListOf<Location>().apply {
-        // TODO: remove when integrate ViewModel
-        repeat(10) {
-            add(Location(it, "location name $it", (it.toFloat() / 2), "type"))
-        }
-    }
+    private val viewModel: MainViewModel by inject()
+
+    private val dataSet = mutableListOf<Location>()
 
     private val adapter = LocationAdapter(dataSet)
 
@@ -38,8 +37,27 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        bindEvents()
+
+        viewModel.fetchLocations()
+    }
+
+    private fun bindEvents() {
+        viewModel.showLocations().observe(viewLifecycleOwner, Observer {
+            progressBar.visible(false)
+            dataSet.addAll(it)
+            adapter.notifyDataSetChanged()
+        })
+
+        viewModel.showLoading().observe(viewLifecycleOwner, Observer {
+            progressBar.visible(it)
+        })
+
+        viewModel.showError().observe(viewLifecycleOwner, Observer {
+            progressBar.visible(false)
+            Toast.makeText(requireContext(), "Ops: ${it.message}", Toast.LENGTH_SHORT).show()
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
