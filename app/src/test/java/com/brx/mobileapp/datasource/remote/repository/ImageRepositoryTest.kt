@@ -6,6 +6,7 @@ import com.brx.mobileapp.factory.SearchResultFactory.makeSearchResults
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
+import io.mockk.verify
 import io.reactivex.Observable
 import org.junit.After
 import org.junit.Before
@@ -29,7 +30,7 @@ class ImageRepositoryTest : RepositoryTest() {
 
     @Test
     fun fetchImage_withRemoteData_shouldReturnLocations() {
-        every { api.fetchImage(any()) } returns Observable.just(makeSearchResults())
+        every { api.fetchImage(any(), any()) } returns Observable.just(makeSearchResults())
 
         repository.fetchImage(randomString())
             .test()
@@ -40,7 +41,7 @@ class ImageRepositoryTest : RepositoryTest() {
 
     @Test
     fun fetchImage_withNoData_shouldCompleteWithoutErrors() {
-        every { api.fetchImage(any()) } returns Observable.empty()
+        every { api.fetchImage(any(), any()) } returns Observable.empty()
 
         repository.fetchImage(randomString())
             .test()
@@ -50,10 +51,35 @@ class ImageRepositoryTest : RepositoryTest() {
 
     @Test
     fun fetchImage_withError_shouldReturnException() {
-        every { api.fetchImage(any()) } returns Observable.error(Throwable())
+        every { api.fetchImage(any(), any()) } returns Observable.error(Throwable())
 
         repository.fetchImage(randomString())
             .test()
             .assertError(Throwable::class.java)
+    }
+
+    @Test
+    fun fetchImageTwoTimes_withSameKeyword_shouldIncrementSearchIndex() {
+        every { api.fetchImage(any(), any()) } returns Observable.just(makeSearchResults())
+        val query = randomString()
+
+        repository.fetchImage(query).test()
+        repository.fetchImage(query).test()
+
+        verify(exactly = 2) { api.fetchImage(any(), any()) }
+        verify(exactly = 1) { api.fetchImage(any(), 1) }
+        verify(exactly = 1) { api.fetchImage(any(), 2) }
+    }
+
+    @Test
+    fun fetchImageTwoTimes_withDifferentKeywords_shouldNotIncrementSearchIndex() {
+        every { api.fetchImage(any(), any()) } returns Observable.just(makeSearchResults())
+        val query = randomString()
+
+        repository.fetchImage(query).test()
+        repository.fetchImage(query.reversed())
+            .test() // just for avoid generate two random queries equals..
+
+        verify(exactly = 2) { api.fetchImage(any(), 1) }
     }
 }
