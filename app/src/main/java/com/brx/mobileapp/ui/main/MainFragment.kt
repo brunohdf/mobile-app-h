@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.brx.mobileapp.R
 import com.brx.mobileapp.datasource.model.Location
@@ -63,7 +63,9 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         locations.adapter = adapter
-        locations.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+        locations.layoutManager = StaggeredGridLayoutManager(
+            resources.getInteger(R.integer.grid_columns), VERTICAL
+        )
 
     }
 
