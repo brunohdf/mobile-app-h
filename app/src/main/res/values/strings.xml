@@ -6,4 +6,6 @@
     <string name="invalid_parameters">Invalid parameters :(</string>
     <string name="please_configure_parameters">Please configure KEY and CX params on gradle.properties before build</string>
     <string name="ok">OK</string>
+    <string name="error">Deu ruim</string>
+    <string name="unexpected_error">Ocorreu um erro inesperado.\nPor favor, tente novamente mais tarde…</string>
 </resources>
