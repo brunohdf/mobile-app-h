@@ -28,12 +28,33 @@ class MainViewModelTest {
     }
 
     @Test
-    fun fetchLocations_shouldTriggerLoading() {
+    fun fetchLocations_shouldEnableLoading() {
         every { useCase.execute(any()) } returns Single.just(makeLocationList())
+
+        val loadingEvents = mutableListOf<Boolean>()
+        viewModel.showLoading().observeForever {
+            loadingEvents.add(it)
+        }
 
         viewModel.fetchLocations()
 
-        Assert.assertTrue(viewModel.showLoading().value ?: false)
+        Assert.assertEquals(2, loadingEvents.size)
+        Assert.assertTrue(loadingEvents.first())
+    }
+
+    @Test
+    fun fetchLocations_shouldDisableLoading() {
+        every { useCase.execute(any()) } returns Single.just(makeLocationList())
+
+        val loadingEvents = mutableListOf<Boolean>()
+        viewModel.showLoading().observeForever {
+            loadingEvents.add(it)
+        }
+
+        viewModel.fetchLocations()
+
+        Assert.assertEquals(2, loadingEvents.size)
+        Assert.assertFalse(loadingEvents.last())
     }
 
     @Test

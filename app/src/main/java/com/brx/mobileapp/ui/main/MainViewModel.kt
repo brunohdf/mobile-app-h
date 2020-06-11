@@ -15,10 +15,12 @@ class MainViewModel(private val useCase: GetLocations) : BaseViewModel() {
 
     private fun setErrorEvent(error: Throwable) {
         displayError.value = error
+        setLoadingEvent(false)
     }
 
     private fun setContentEvent(locations: List<Location>) {
         locationsEvent.value = locations
+        setLoadingEvent(false)
     }
 
     fun showLocations(): LiveData<List<Location>> = locationsEvent
@@ -34,6 +36,7 @@ class MainViewModel(private val useCase: GetLocations) : BaseViewModel() {
             useCase.execute(Unit)
                 .subscribeWith(object : ResourceSingleObserver<MutableList<Location>>() {
                     override fun onSuccess(list: MutableList<Location>) {
+                        locations = list
                         setContentEvent(list)
                     }
 

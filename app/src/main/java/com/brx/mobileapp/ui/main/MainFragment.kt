@@ -43,7 +43,6 @@ class MainFragment : Fragment() {
 
     private fun bindEvents() {
         viewModel.showLocations().observe(viewLifecycleOwner, Observer {
-            progressBar.visible(false)
             locations.visible()
 
             dataSet.addAll(it)
@@ -55,7 +54,6 @@ class MainFragment : Fragment() {
         })
 
         viewModel.showError().observe(viewLifecycleOwner, Observer {
-            progressBar.visible(false)
             errorView.apply {
                 visible()
                 title = context.getString(R.string.error)
