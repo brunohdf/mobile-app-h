@@ -21,8 +21,7 @@ class GetLocations(
         .flatMap { list -> Observable.fromIterable(list.listLocations) }
         .flatMap(
             { item ->
-                val query = "${item.type} ${item.name}"
-                searchEngine.fetchImage(query).onErrorReturnItem(
+                searchEngine.fetchImage(item.type).onErrorReturnItem(
                     SearchResults(listOf(SearchItem("", Image(""))))
                 )
             },
