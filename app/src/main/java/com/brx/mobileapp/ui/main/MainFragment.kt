@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.brx.mobileapp.R
 import com.brx.mobileapp.datasource.model.Location
+import com.brx.mobileapp.ui.detail.DetailFragment
 import com.brx.mobileapp.util.extension.visible
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.koin.android.ext.android.inject
@@ -24,7 +25,11 @@ class MainFragment : Fragment() {
 
     private val dataSet = mutableListOf<Location>()
 
-    private val adapter = LocationAdapter(dataSet)
+    private val adapter = LocationAdapter(dataSet) { id, image ->
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.container, DetailFragment.newInstance(id, image))
+            .commitNow()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

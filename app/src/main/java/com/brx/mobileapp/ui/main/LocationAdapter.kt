@@ -9,12 +9,15 @@ import com.brx.mobileapp.datasource.model.Location
 import com.brx.mobileapp.util.extension.loadRemoteImage
 import kotlinx.android.synthetic.main.location_item.view.*
 
-class LocationAdapter(private val dataSet: List<Location>) :
+class LocationAdapter(
+    private val dataSet: List<Location>,
+    private val onClick: (id: Int, image: String) -> Unit
+) :
     RecyclerView.Adapter<LocationAdapter.LocationHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.location_item, parent, false)
-        return LocationHolder(view)
+        return LocationHolder(view, onClick)
     }
 
     override fun getItemCount(): Int = dataSet.size
@@ -23,7 +26,8 @@ class LocationAdapter(private val dataSet: List<Location>) :
         holder.bind(dataSet[position])
     }
 
-    class LocationHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class LocationHolder(itemView: View, private val onClick: (id: Int, image: String) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
         fun bind(data: Location) {
             itemView.apply {
                 name.text = data.name
@@ -31,6 +35,10 @@ class LocationAdapter(private val dataSet: List<Location>) :
                 review.rating = data.review
                 review_label.text = data.review.toString()
                 image.loadRemoteImage(itemView.context, data.imageUrlThumb)
+            }
+
+            itemView.setOnClickListener {
+                onClick.invoke(data.id, data.imageUrl ?: "")
             }
         }
     }

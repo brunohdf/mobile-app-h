@@ -36,23 +36,22 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavigationBar() {
         bottom_navigation.itemIconTintList = null
         bottom_navigation.setOnNavigationItemSelectedListener {
-            Toast.makeText(
-                this, "TODO: ${when (it.itemId) {
-                    R.id.home -> {
-                        "Home"
-                    }
-                    R.id.map -> {
-                        "Map"
-                    }
-                    else -> {
-                        "Profile"
-                    }
-                }}", Toast.LENGTH_SHORT
-            ).show()
-
+            when (it.itemId) {
+                R.id.home -> {
+                    // Paliativo para demostração
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.container, MainFragment.newInstance())
+                        .commitNow()
+                }
+                R.id.map -> {
+                    Toast.makeText(this, "TODO: Map ", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Toast.makeText(this, "TODO: Profile ", Toast.LENGTH_SHORT).show()
+                }
+            }
 
             true
         }
     }
-
 }
