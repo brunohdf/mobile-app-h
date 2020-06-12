@@ -8,4 +8,7 @@
     <string name="ok">OK</string>
     <string name="error">Deu ruim</string>
     <string name="unexpected_error">Ocorreu um erro inesperado.\nPor favor, tente novamente mais tarde…</string>
+
+    <!-- Fix strange issue with Toast, See: https://issuetracker.google.com/issues/64053344 -->
+    <string name="default_font" translatable="false">sans-serif-light</string>
 </resources>
