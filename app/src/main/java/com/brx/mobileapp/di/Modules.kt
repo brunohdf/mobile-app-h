@@ -52,7 +52,7 @@ object Modules {
     }
 
     val viewModels = module {
-        single { MainViewModel(get()) }
+        viewModel { MainViewModel(get()) }
     }
 
 }
