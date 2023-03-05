@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:listitem="@layout/location_item" />
+        tools:listitem="@layout/movie_item" />
 
     <com.brx.mobileapp.ui.customview.ErrorView
         android:id="@+id/errorView"

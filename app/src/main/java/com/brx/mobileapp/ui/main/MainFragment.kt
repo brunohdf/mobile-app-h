@@ -4,18 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.brx.mobileapp.R
-import com.brx.mobileapp.datasource.model.Location
-import com.brx.mobileapp.ui.detail.DetailFragment
-import com.brx.mobileapp.util.extension.Constants.LOCATION_KEY
+import com.brx.mobileapp.usecase.model.MovieModel
 import com.brx.mobileapp.util.extension.visible
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.koin.android.ext.android.inject
@@ -24,9 +19,9 @@ class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by inject()
 
-    private val dataSet = mutableListOf<Location>()
+    private val movies = mutableListOf<MovieModel>()
 
-    private val adapter = LocationAdapter(dataSet) { location ->
+    private val adapter = LocationAdapter(movies) { movie ->
         findNavController().navigate(R.id.detail)
         // bundleOf(LOCATION_KEY to location)
     }
@@ -53,7 +48,7 @@ class MainFragment : Fragment() {
     private fun bindEvents() {
         viewModel.showLocations().observe(viewLifecycleOwner, Observer {
             locations.visible()
-            dataSet.addAll(it)
+            movies.addAll(it)
         })
 
         viewModel.showLoading().observe(viewLifecycleOwner, Observer {

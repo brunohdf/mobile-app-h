@@ -62,7 +62,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatRatingBar
-                android:id="@+id/review"
+                android:id="@+id/rbReview"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,8 +79,8 @@
                 android:text="@android:string/status_bar_notification_info_overflow"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_small"
-                app:layout_constraintStart_toEndOf="@+id/review"
-                app:layout_constraintTop_toTopOf="@+id/review" />
+                app:layout_constraintStart_toEndOf="@+id/rbReview"
+                app:layout_constraintTop_toTopOf="@+id/rbReview" />
         </LinearLayout>
 
 

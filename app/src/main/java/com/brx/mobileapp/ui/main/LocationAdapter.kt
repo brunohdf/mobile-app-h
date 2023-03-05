@@ -5,18 +5,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.brx.mobileapp.R
-import com.brx.mobileapp.datasource.model.Location
+import com.brx.mobileapp.usecase.model.MovieModel
+import com.brx.mobileapp.util.MovieImageUrlBuilder
 import com.brx.mobileapp.util.extension.loadRemoteImage
-import kotlinx.android.synthetic.main.location_item.view.*
+import kotlinx.android.synthetic.main.movie_item.view.*
 
 class LocationAdapter(
-    private val dataSet: List<Location>,
-    private val onClick: (location: Location) -> Unit
+    private val dataSet: List<MovieModel>,
+    private val onClick: (location: MovieModel) -> Unit
 ) :
     RecyclerView.Adapter<LocationAdapter.LocationHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.location_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
         return LocationHolder(view, onClick)
     }
 
@@ -26,19 +28,24 @@ class LocationAdapter(
         holder.bind(dataSet[position])
     }
 
-    class LocationHolder(itemView: View, private val onClick: (location: Location) -> Unit) :
+    class LocationHolder(itemView: View, private val onClick: (movie: MovieModel) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
-        fun bind(data: Location) {
-            itemView.apply {
-                name.text = data.name
-                type.text = data.type
-                review.rating = data.review
-                review_label.text = data.review.toString()
-                image.loadRemoteImage(itemView.context, data.imageUrlThumb)
+
+        private val movieImageUrlBuilder = MovieImageUrlBuilder()
+
+        fun bind(movie: MovieModel) {
+            itemView.tvTitle.text = movie.title
+            itemView.tvGenre.text = movie.genres?.first()?.name.orEmpty()
+            with(movie.vote_average) {
+                itemView.rbReview.rating = this
+                itemView.tvReviewLabel.text = this.toString()
+            }
+            itemView.cvMovie.setOnClickListener {
+                onClick.invoke(movie)
             }
 
-            itemView.setOnClickListener {
-                onClick.invoke(data)
+            movie.posterPath?.let {
+                itemView.ivPoster.loadRemoteImage(itemView.context, movieImageUrlBuilder.buildPosterUrl(it))
             }
         }
     }

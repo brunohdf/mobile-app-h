@@ -15,21 +15,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        validateParameterDefinition()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-    private fun validateParameterDefinition() {
-        if (BuildConfig.KEY.isEmpty() || BuildConfig.CX.isEmpty()) {
-            AlertDialog.Builder(this)
-                .setTitle(getString(R.string.invalid_parameters))
-                .setMessage(getString(R.string.please_configure_parameters))
-                .setPositiveButton(getString(R.string.ok), null)
-                .setOnDismissListener { finish() }
-                .create().show()
-        }
     }
 }

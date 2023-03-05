@@ -7,6 +7,7 @@
     tools:background="#f7f7f7">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvMovie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
@@ -21,7 +22,7 @@
             android:paddingBottom="16dp">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/image"
+                android:id="@+id/ivPoster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -33,45 +34,48 @@
                 tools:src="@tools:sample/avatars" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/name"
+                android:id="@+id/tvTitle"
                 style="@style/SubTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image"
+                app:layout_constraintTop_toBottomOf="@+id/ivPoster"
                 tools:text="Café Escritório" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/type"
+                android:id="@+id/tvGenre"
                 style="@style/GeneralText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginHorizontal="8dp"
                 android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/name"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
                 tools:text="Coworking" />
 
             <androidx.appcompat.widget.AppCompatRatingBar
-                android:id="@+id/review"
+                android:id="@+id/rbReview"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/type"
+                app:layout_constraintTop_toBottomOf="@+id/tvGenre"
                 tools:rating="3.9" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/review_label"
+                android:id="@+id/tvReviewLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_xsmall"
-                app:layout_constraintStart_toEndOf="@+id/review"
-                app:layout_constraintTop_toTopOf="@+id/review"
-                tools:text="3.9" />
+                app:layout_constraintStart_toEndOf="@+id/rbReview"
+                app:layout_constraintTop_toTopOf="@+id/rbReview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

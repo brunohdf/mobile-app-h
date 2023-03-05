@@ -1,8 +1,8 @@
 package com.brx.mobileapp.ui.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.brx.mobileapp.factory.LocationFactory.makeLocationList
-import com.brx.mobileapp.usecase.GetLocations
+import com.brx.mobileapp.factory.ModelFactory.makeMovieModelList
+import com.brx.mobileapp.usecase.GetUpcomingMovies
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.unmockkAll
@@ -11,7 +11,7 @@ import org.junit.*
 
 class MainViewModelTest {
 
-    private val useCase: GetLocations = mockk()
+    private val useCase: GetUpcomingMovies = mockk()
     private lateinit var viewModel: MainViewModel
 
     @get:Rule
@@ -29,7 +29,7 @@ class MainViewModelTest {
 
     @Test
     fun fetchLocations_shouldEnableLoading() {
-        every { useCase.execute(any()) } returns Single.just(makeLocationList())
+        every { useCase.execute(any()) } returns Single.just(makeMovieModelList())
 
         val loadingEvents = mutableListOf<Boolean>()
         viewModel.showLoading().observeForever {
@@ -44,7 +44,7 @@ class MainViewModelTest {
 
     @Test
     fun fetchLocations_shouldDisableLoading() {
-        every { useCase.execute(any()) } returns Single.just(makeLocationList())
+        every { useCase.execute(any()) } returns Single.just(makeMovieModelList())
 
         val loadingEvents = mutableListOf<Boolean>()
         viewModel.showLoading().observeForever {
@@ -59,7 +59,7 @@ class MainViewModelTest {
 
     @Test
     fun fetchLocations_withData_shouldTriggerLocations() {
-        every { useCase.execute(any()) } returns Single.just(makeLocationList())
+        every { useCase.execute(any()) } returns Single.just(makeMovieModelList())
 
         viewModel.fetchLocations()
 

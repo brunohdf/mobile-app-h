@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.brx.mobileapp.R
-import kotlinx.android.synthetic.main.detail_fragment.*
+import com.brx.mobileapp.usecase.model.MovieModel
+import org.koin.android.ext.android.inject
 
 class DetailFragment : Fragment() {
 
@@ -14,6 +15,10 @@ class DetailFragment : Fragment() {
         private const val ID = "id"
         private const val IMAGE = "image"
     }
+
+    private val viewModel: DetailViewModel by inject()
+
+    private val movies = mutableListOf<MovieModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

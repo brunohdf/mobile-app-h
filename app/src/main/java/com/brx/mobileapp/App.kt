@@ -13,7 +13,8 @@ class App : Application() {
         startKoin {
             androidContext(this@App)
             modules(
-                Modules.remotes,
+                Modules.networking,
+                Modules.dataSources,
                 Modules.useCases,
                 Modules.repositories,
                 Modules.viewModels
