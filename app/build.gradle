@@ -6,7 +6,6 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 33
-    buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "com.brx.mobileapp"
         minSdkVersion 21
@@ -28,6 +27,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'com.brx.mobileapp'
 }
 
 dependencies {
@@ -51,9 +51,12 @@ dependencies {
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.koin:koin-test:$koin_version"
+    testImplementation "androidx.test.ext:junit:$androidx_version"
+    testImplementation "android.arch.core:core-testing:$androidx_version"
     testImplementation 'io.mockk:mockk:1.9.3'
-    testImplementation "android.arch.core:core-testing:1.1.1"
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
