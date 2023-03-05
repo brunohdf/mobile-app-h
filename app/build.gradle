@@ -13,9 +13,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField("String", "KEY", KEY)
-        buildConfigField("String", "CX", CX)
     }
     buildTypes {
         release {
