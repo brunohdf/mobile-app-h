@@ -1,25 +1,25 @@
 package com.brx.mobileapp
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.brx.mobileapp.ui.main.MainFragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
-                .commitNow()
-        }
-
-        setupNavigationBar()
         validateParameterDefinition()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
     private fun validateParameterDefinition() {
@@ -30,28 +30,6 @@ class MainActivity : AppCompatActivity() {
                 .setPositiveButton(getString(R.string.ok), null)
                 .setOnDismissListener { finish() }
                 .create().show()
-        }
-    }
-
-    private fun setupNavigationBar() {
-        bottom_navigation.itemIconTintList = null
-        bottom_navigation.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.home -> {
-                    // Paliativo para demostração
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, MainFragment.newInstance())
-                        .commitNow()
-                }
-                R.id.map -> {
-                    Toast.makeText(this, "TODO: Map ", Toast.LENGTH_SHORT).show()
-                }
-                else -> {
-                    Toast.makeText(this, "TODO: Profile ", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            true
         }
     }
 }

@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.location_item.view.*
 
 class LocationAdapter(
     private val dataSet: List<Location>,
-    private val onClick: (id: Int, image: String) -> Unit
+    private val onClick: (location: Location) -> Unit
 ) :
     RecyclerView.Adapter<LocationAdapter.LocationHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationHolder {
@@ -26,7 +26,7 @@ class LocationAdapter(
         holder.bind(dataSet[position])
     }
 
-    class LocationHolder(itemView: View, private val onClick: (id: Int, image: String) -> Unit) :
+    class LocationHolder(itemView: View, private val onClick: (location: Location) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
         fun bind(data: Location) {
             itemView.apply {
@@ -38,7 +38,7 @@ class LocationAdapter(
             }
 
             itemView.setOnClickListener {
-                onClick.invoke(data.id, data.imageUrl ?: "")
+                onClick.invoke(data)
             }
         }
     }

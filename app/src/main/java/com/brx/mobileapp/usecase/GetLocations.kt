@@ -1,5 +1,6 @@
 package com.brx.mobileapp.usecase
 
+import android.util.Log
 import com.brx.mobileapp.datasource.model.Image
 import com.brx.mobileapp.datasource.model.Location
 import com.brx.mobileapp.datasource.model.SearchItem
@@ -28,9 +29,12 @@ class GetLocations(
             { location: Location, image: SearchResults? ->
                 location.apply {
                     image?.items?.first()?.let {
+                        Log.d("BRX", location.name)
+                        Log.d("BRX", it.toString())
                         imageUrl = it.link
                         imageUrlThumb = it.image.thumbnailLink
-                    }
+
+                    } ?: Log.d("BRX", "Sem imagem retornada para ${location.name}")
                 }
             }
         ).observeOn(AndroidSchedulers.mainThread())
