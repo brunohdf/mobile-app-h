@@ -7,32 +7,32 @@ import com.brx.mobileapp.usecase.GetDetails
 import com.brx.mobileapp.usecase.model.MovieModel
 import io.reactivex.observers.ResourceSingleObserver
 
-class DetailViewModel(private val useCase: GetDetails) : BaseViewModel() {
+class DetailViewModel(
+    private val useCase: GetDetails,
+    private val movieId: Long
+) : BaseViewModel() {
 
-    private val details = MutableLiveData<MovieModel>()
+    private val _details = MutableLiveData<MovieModel>()
+    val details: LiveData<MovieModel> = _details
 
     lateinit var movie: MovieModel
 
-    fun details(): LiveData<MovieModel> = details
-
-    private fun setContentEvent(detail: MovieModel) {
-        details.value = detail
-        setLoading(false)
-    }
-
-    fun fetchDetails(movieId: Long) {
+    fun fetchDetails() {
+        showLoading()
         if (::movie.isInitialized) {
-            details.value = movie
+            _details.value = movie
         } else {
             useCase.execute(GetDetails.Param(movieId))
                 .subscribeWith(object : ResourceSingleObserver<MovieModel>() {
-                    override fun onSuccess(list: MovieModel) {
-                        movie = list
-                        setContentEvent(list)
+                    override fun onSuccess(movie: MovieModel) {
+                        this@DetailViewModel.movie = movie
+                        _details.value = movie
+                        showLoading(false)
                     }
 
                     override fun onError(error: Throwable) {
-                        setError(error)
+                        showError(error)
+                        showLoading(false)
                     }
                 }).also { disposable?.add(it) }
         }

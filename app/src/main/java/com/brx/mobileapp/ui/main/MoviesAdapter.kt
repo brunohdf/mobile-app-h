@@ -36,7 +36,7 @@ class MoviesAdapter(
         fun bind(movie: MovieModel) {
             itemView.tvTitle.text = movie.title
             itemView.tvGenre.text = movie.genres?.first()?.name.orEmpty()
-            with(movie.vote_average) {
+            with(movie.voteAverage) {
                 itemView.rbReview.rating = this
                 itemView.tvReviewLabel.text = this.toString()
             }

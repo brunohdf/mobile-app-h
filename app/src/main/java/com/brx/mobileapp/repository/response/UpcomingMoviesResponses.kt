@@ -14,7 +14,7 @@ data class MovieResponse(
     val title: String,
     val overview: String?,
     val genres: List<GenreResponse>?,
-    val vote_average: String?,
+    @field:Json(name = "vote_average") val voteAverage: String?,
     @field:Json(name = "genre_ids") val genreIds: List<Int>?,
     @field:Json(name = "poster_path") val posterPath: String?,
     @field:Json(name = "backdrop_path") val backdropPath: String?,

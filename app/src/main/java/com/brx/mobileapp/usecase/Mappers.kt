@@ -12,7 +12,7 @@ fun MovieResponse.toMovieModel() = MovieModel(
     this.title,
     this.overview,
     genres = this.genres?.map { it.toGenreModel() },
-    vote_average = (this.vote_average?.toFloat() ?: 0f) / 2,
+    voteAverage = (this.voteAverage?.toFloat() ?: 0f) / 2,
     genreIds = this.genreIds,
     posterPath = this.posterPath,
     backdropPath = this.backdropPath,

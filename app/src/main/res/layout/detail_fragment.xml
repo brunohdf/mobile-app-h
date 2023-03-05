@@ -21,7 +21,7 @@
             app:titleEnabled="false">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/image"
+                android:id="@+id/ivPoster"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:fitsSystemWindows="true"
@@ -39,6 +39,7 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitle"
                     style="@style/DetailTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -73,7 +74,7 @@
                 tools:ignore="RtlHardcoded" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/review_label"
+                android:id="@+id/tbLabelReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@android:string/status_bar_notification_info_overflow"
@@ -91,5 +92,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <com.brx.mobileapp.ui.customview.ErrorView
+        android:id="@+id/evError"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

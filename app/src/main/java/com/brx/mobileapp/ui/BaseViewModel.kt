@@ -15,13 +15,13 @@ abstract class BaseViewModel : ViewModel() {
     private val _displayError = MutableLiveData<Throwable>()
     val displayError: LiveData<Throwable> = _displayError
 
-    protected fun setLoading(showLoading: Boolean = true) {
+    protected fun showLoading(showLoading: Boolean = true) {
         _loading.value = showLoading
     }
 
-    protected fun setError(error: Throwable) {
+    protected fun showError(error: Throwable) {
         _displayError.value = error
-        setLoading(false)
+        showLoading(false)
     }
 
     override fun onCleared() {

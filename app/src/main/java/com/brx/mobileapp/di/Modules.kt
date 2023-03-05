@@ -49,7 +49,7 @@ object Modules {
 
     val viewModels = module {
         viewModel { MainViewModel(get()) }
-        viewModel { DetailViewModel(get()) }
+        viewModel {  (movieId : Long) -> DetailViewModel(get(), movieId) }
     }
 
 }

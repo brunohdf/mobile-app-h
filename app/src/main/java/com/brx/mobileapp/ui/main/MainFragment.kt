@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.brx.mobileapp.R
 import com.brx.mobileapp.usecase.model.MovieModel
+import com.brx.mobileapp.util.Constants.MOVIE_KEY
 import com.brx.mobileapp.util.extension.visible
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.koin.android.ext.android.inject
@@ -22,8 +24,7 @@ class MainFragment : Fragment() {
     private val movies = mutableListOf<MovieModel>()
 
     private val moviesAdapter = MoviesAdapter(movies) { movie ->
-        findNavController().navigate(R.id.detail)
-        // bundleOf(LOCATION_KEY to location)
+        findNavController().navigate(R.id.action_to_detail, bundleOf(MOVIE_KEY to movie.id))
     }
 
     override fun onCreateView(

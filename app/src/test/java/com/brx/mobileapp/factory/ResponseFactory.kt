@@ -36,7 +36,7 @@ object ResponseFactory {
             title = randomString(),
             overview = randomString(),
             genres = genres,
-            vote_average = randomFLoat(5).toString(),
+            voteAverage = randomFLoat(5).toString(),
             genreIds = genresIds,
             posterPath = randomString(),
             backdropPath = randomString(),
