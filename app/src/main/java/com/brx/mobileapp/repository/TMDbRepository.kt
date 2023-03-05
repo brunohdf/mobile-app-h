@@ -14,8 +14,6 @@ class TMDbRepository(private val api: TmdbApi, private val cache: Cache) {
     fun getUpcomingMovies(page: Long = 1): Observable<List<MovieResponse>> {
 
         val movies = api.upcomingMovies(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE, page, TmdbApi.DEFAULT_REGION)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .map { it.results }
 
         return Observable.zip(movies, getGenres(), BiFunction { t1, t2 ->
@@ -28,8 +26,6 @@ class TMDbRepository(private val api: TmdbApi, private val cache: Cache) {
     private fun getGenres(): Observable<List<GenreResponse>>? {
         return if (cache.genres.isEmpty()) {
             api.genres(TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .map {
                         // save genres in cache to prevent new requests
                         cache.cacheGenres(it.genres)
@@ -41,7 +37,5 @@ class TMDbRepository(private val api: TmdbApi, private val cache: Cache) {
 
     fun getDetails(id: Long): Observable<MovieResponse> {
         return api.movie(id, TmdbApi.API_KEY, TmdbApi.DEFAULT_LANGUAGE)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
     }
 }
