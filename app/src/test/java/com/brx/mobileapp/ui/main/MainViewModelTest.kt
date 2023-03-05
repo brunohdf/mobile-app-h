@@ -28,59 +28,59 @@ class MainViewModelTest {
     }
 
     @Test
-    fun fetchLocations_shouldEnableLoading() {
+    fun fetchMovies_shouldEnableLoading() {
         every { useCase.execute(any()) } returns Single.just(makeMovieModelList())
 
         val loadingEvents = mutableListOf<Boolean>()
-        viewModel.showLoading().observeForever {
+        viewModel.loading.observeForever {
             loadingEvents.add(it)
         }
 
-        viewModel.fetchLocations()
+        viewModel.fetchMovies()
 
         Assert.assertEquals(2, loadingEvents.size)
         Assert.assertTrue(loadingEvents.first())
     }
 
     @Test
-    fun fetchLocations_shouldDisableLoading() {
+    fun fetchMovies_shouldDisableLoading() {
         every { useCase.execute(any()) } returns Single.just(makeMovieModelList())
 
         val loadingEvents = mutableListOf<Boolean>()
-        viewModel.showLoading().observeForever {
+        viewModel.loading.observeForever {
             loadingEvents.add(it)
         }
 
-        viewModel.fetchLocations()
+        viewModel.fetchMovies()
 
         Assert.assertEquals(2, loadingEvents.size)
         Assert.assertFalse(loadingEvents.last())
     }
 
     @Test
-    fun fetchLocations_withData_shouldTriggerLocations() {
+    fun fetchMovies_withData_shouldTriggerMovies() {
         every { useCase.execute(any()) } returns Single.just(makeMovieModelList())
 
-        viewModel.fetchLocations()
+        viewModel.fetchMovies()
 
-        Assert.assertTrue(viewModel.showLocations().value?.isNotEmpty() ?: false)
+        Assert.assertTrue(viewModel.upcomingMovies.value?.isNotEmpty() ?: false)
     }
 
     @Test
-    fun fetchLocations_whenEmpty_shouldTriggerLocations() {
+    fun fetchMovies_whenEmpty_shouldTriggerMovies() {
         every { useCase.execute(any()) } returns Single.just(mutableListOf())
 
-        viewModel.fetchLocations()
+        viewModel.fetchMovies()
 
-        Assert.assertTrue(viewModel.showLocations().value?.isEmpty() ?: false)
+        Assert.assertTrue(viewModel.upcomingMovies.value?.isEmpty() ?: false)
     }
 
     @Test
-    fun fetchLocations_withException_shouldTriggerError() {
+    fun fetchMovies_withException_shouldTriggerError() {
         every { useCase.execute(any()) } returns Single.error(Throwable())
 
-        viewModel.fetchLocations()
+        viewModel.fetchMovies()
 
-        Assert.assertTrue(viewModel.showError().value is Throwable)
+        Assert.assertTrue(viewModel.displayError.value is Throwable)
     }
 }

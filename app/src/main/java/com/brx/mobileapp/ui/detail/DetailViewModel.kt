@@ -17,7 +17,7 @@ class DetailViewModel(private val useCase: GetDetails) : BaseViewModel() {
 
     private fun setContentEvent(detail: MovieModel) {
         details.value = detail
-        setLoadingEvent(false)
+        setLoading(false)
     }
 
     fun fetchDetails(movieId: Long) {
@@ -32,7 +32,7 @@ class DetailViewModel(private val useCase: GetDetails) : BaseViewModel() {
                     }
 
                     override fun onError(error: Throwable) {
-                        setErrorEvent(error)
+                        setError(error)
                     }
                 }).also { disposable?.add(it) }
         }

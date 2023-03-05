@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.brx.mobileapp.R
 import com.brx.mobileapp.usecase.model.MovieModel
@@ -21,7 +21,7 @@ class MainFragment : Fragment() {
 
     private val movies = mutableListOf<MovieModel>()
 
-    private val adapter = LocationAdapter(movies) { movie ->
+    private val moviesAdapter = MoviesAdapter(movies) { movie ->
         findNavController().navigate(R.id.detail)
         // bundleOf(LOCATION_KEY to location)
     }
@@ -35,28 +35,27 @@ class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.fetchLocations()
+        viewModel.fetchMovies()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindEvents()
         bindView()
-
     }
 
     private fun bindEvents() {
-        viewModel.showLocations().observe(viewLifecycleOwner, Observer {
-            locations.visible()
+        viewModel.upcomingMovies.observe(viewLifecycleOwner, Observer {
+            rvMovies.visible()
             movies.addAll(it)
         })
 
-        viewModel.showLoading().observe(viewLifecycleOwner, Observer {
-            progressBar.visible(it)
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
+            pbLoading.visible(it)
         })
 
-        viewModel.showError().observe(viewLifecycleOwner, Observer {
-            errorView.apply {
+        viewModel.displayError.observe(viewLifecycleOwner, Observer {
+            evError.apply {
                 visible()
                 title = context.getString(R.string.error)
                 message = context.getString(R.string.unexpected_error)
@@ -67,9 +66,13 @@ class MainFragment : Fragment() {
     }
 
     private fun bindView() {
-        locations.adapter = adapter
-        locations.layoutManager = StaggeredGridLayoutManager(
-            resources.getInteger(R.integer.grid_columns), VERTICAL
-        )
+        with(rvMovies) {
+            StaggeredGridLayoutManager(
+                resources.getInteger(R.integer.grid_columns), RecyclerView.VERTICAL
+            ).let {
+                adapter = moviesAdapter
+                layoutManager = it
+            }
+        }
     }
 }

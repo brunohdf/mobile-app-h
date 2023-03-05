@@ -1,6 +1,5 @@
 package com.brx.mobileapp.usecase
 
-import com.brx.mobileapp.factory.ModelFactory
 import com.brx.mobileapp.factory.ResponseFactory
 import com.brx.mobileapp.repository.TMDbRepository
 import io.mockk.every
@@ -13,7 +12,7 @@ import org.junit.Before
 
 import org.junit.Test
 
-class GetLocationsTest() {
+class GetMoviesTest {
 
     private val repository: TMDbRepository = mockk()
     private lateinit var useCase: GetUpcomingMovies
@@ -29,7 +28,7 @@ class GetLocationsTest() {
     }
 
     @Test
-    fun getLocations_shouldFetchOneImage_forEachLocation() {
+    fun getMovies_shouldFetchOneImage_forEachLocation() {
         every { repository.getUpcomingMovies() } returns Observable.just(
             ResponseFactory.makeMovieResponseList(
                 2
@@ -43,7 +42,7 @@ class GetLocationsTest() {
     }
 
     @Test
-    fun getLocations_withFetchImageError_shouldComplete() {
+    fun getMovies_withFetchImageError_shouldComplete() {
         every { repository.getUpcomingMovies() } returns Observable.just(
             ResponseFactory.makeMovieResponseList(1)
         )
@@ -53,7 +52,7 @@ class GetLocationsTest() {
     }
 
     @Test
-    fun getLocationsError_shouldNotComplete() {
+    fun getMoviesError_shouldNotComplete() {
         every { repository.getUpcomingMovies() } returns Observable.error(Throwable())
 
         useCase.execute(GetUpcomingMovies.Param(1))

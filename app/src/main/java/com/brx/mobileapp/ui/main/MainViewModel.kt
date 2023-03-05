@@ -9,27 +9,23 @@ import io.reactivex.observers.ResourceSingleObserver
 
 class MainViewModel(private val useCase: GetUpcomingMovies) : BaseViewModel() {
 
-    private val upcomingMovies = MutableLiveData<List<MovieModel>>()
+    private val _upcomingMovies = MutableLiveData<List<MovieModel>>()
+    val upcomingMovies: LiveData<List<MovieModel>> = _upcomingMovies
 
     private lateinit var movies: List<MovieModel>
 
-    fun upcomingMovies(): LiveData<List<MovieModel>> = upcomingMovies
-
-    private var page: Long = 1
-
-    private fun setContentEvent(locations: List<MovieModel>) {
-        upcomingMovies.value = locations
-        setLoadingEvent(false)
+    private fun setContentEvent(movies: List<MovieModel>) {
+        _upcomingMovies.value = movies
+        setLoading(false)
     }
 
-    fun showLocations(): LiveData<List<MovieModel>> = upcomingMovies
+    fun fetchMovies(page: Long = 1) {
 
-    fun fetchLocations() {
-
-        setLoadingEvent()
+        setLoading()
 
         if (::movies.isInitialized) {
-            setContentEvent(movies)
+            _upcomingMovies.value = movies
+            setLoading(false)
         } else {
             useCase.execute(GetUpcomingMovies.Param(page))
                 .subscribeWith(object : ResourceSingleObserver<MutableList<MovieModel>>() {
@@ -39,9 +35,11 @@ class MainViewModel(private val useCase: GetUpcomingMovies) : BaseViewModel() {
                     }
 
                     override fun onError(error: Throwable) {
-                        setErrorEvent(error)
+                        setError(error)
                     }
-                }).also { disposable?.add(it) }
+                }).also {
+                    disposable?.add(it)
+                }
         }
     }
 }

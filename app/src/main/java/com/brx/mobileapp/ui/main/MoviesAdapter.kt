@@ -10,25 +10,25 @@ import com.brx.mobileapp.util.MovieImageUrlBuilder
 import com.brx.mobileapp.util.extension.loadRemoteImage
 import kotlinx.android.synthetic.main.movie_item.view.*
 
-class LocationAdapter(
+class MoviesAdapter(
     private val dataSet: List<MovieModel>,
     private val onClick: (location: MovieModel) -> Unit
 ) :
-    RecyclerView.Adapter<LocationAdapter.LocationHolder>() {
+    RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
-        return LocationHolder(view, onClick)
+        return MoviesViewHolder(view, onClick)
     }
 
     override fun getItemCount(): Int = dataSet.size
 
-    override fun onBindViewHolder(holder: LocationHolder, position: Int) {
+    override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         holder.bind(dataSet[position])
     }
 
-    class LocationHolder(itemView: View, private val onClick: (movie: MovieModel) -> Unit) :
+    class MoviesViewHolder(itemView: View, private val onClick: (movie: MovieModel) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
 
         private val movieImageUrlBuilder = MovieImageUrlBuilder()

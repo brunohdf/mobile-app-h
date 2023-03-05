@@ -12,7 +12,8 @@ class GetUpcomingMovies(
     private val location: TMDbRepository
 ) : IUseCase<GetUpcomingMovies.Param, MutableList<MovieModel>> {
 
-    override fun execute(param: Param): Single<MutableList<MovieModel>> = location.getUpcomingMovies()
+    override fun execute(param: Param): Single<MutableList<MovieModel>> = location
+        .getUpcomingMovies(param.page)
         .subscribeOn(Schedulers.io())
         .flatMap { list -> Observable.fromIterable(list) }
         .observeOn(AndroidSchedulers.mainThread())

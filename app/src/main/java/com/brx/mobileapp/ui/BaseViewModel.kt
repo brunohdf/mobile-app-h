@@ -3,25 +3,25 @@ package com.brx.mobileapp.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.brx.mobileapp.repository.response.MovieResponse
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseViewModel : ViewModel() {
 
     protected var disposable: CompositeDisposable? = CompositeDisposable()
-    private val displayError = MutableLiveData<Throwable>()
 
-    private val showLoadingEvent = MutableLiveData<Boolean>()
-    protected fun setLoadingEvent(showLoading: Boolean = true) {
-        showLoadingEvent.value = showLoading
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
+
+    private val _displayError = MutableLiveData<Throwable>()
+    val displayError: LiveData<Throwable> = _displayError
+
+    protected fun setLoading(showLoading: Boolean = true) {
+        _loading.value = showLoading
     }
 
-    fun showLoading(): LiveData<Boolean> = showLoadingEvent
-    fun showError(): LiveData<Throwable> = displayError
-
-    protected fun setErrorEvent(error: Throwable) {
-        displayError.value = error
-        setLoadingEvent(false)
+    protected fun setError(error: Throwable) {
+        _displayError.value = error
+        setLoading(false)
     }
 
     override fun onCleared() {
