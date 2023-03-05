@@ -29,10 +29,6 @@ class TMDbRepositoryTest {
         every { cache.genres } returns makeGenreListResponse()
         every { cache.cacheGenres(any()) } just Runs
         repository = TMDbRepository(api, cache)
-
-        // specify which thread to use for IO and Main schedulers
-        RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
     }
 
     @Test
